@@ -50,6 +50,18 @@ After editing:
 4. Commit with a clear message.
 5. Push only when the owner has approved the change path or the task explicitly includes push.
 
+## Verification workflow
+
+If the project uses a verification agent, the loop is:
+
+1. Implementation happens on a feature branch, never directly on main.
+2. The feature branch is pushed before verification, so the verifier reviews the exact commit.
+3. The verifier checks that commit against the brief, these repo rules, available evidence, and the truth review. It reports findings and the verified commit SHA; it does not implement.
+4. Failed checks return to the implementing agent for remediation; the fix is committed, pushed, and verified again.
+5. Any implementation change after a pass invalidates the pass and requires re-verification.
+6. Only a verified commit may merge to main, and only after the owner approves.
+7. After deployment, the verifier checks the live URL. A live failure re-enters the loop.
+
 ## Deployment rules
 
 - Deployment method: {{e.g. push to main auto-deploys via host X}}

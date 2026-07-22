@@ -2,7 +2,7 @@
 
 A GitHub-centered handoff protocol for running long-lived builds across multiple AI agents without losing context, duplicating work, or leaking private files.
 
-Built and used in production by [Rose Laguana](https://roselaguana.vercel.app) to coordinate Perplexity Computer, Claude Code, and a Codex review lane across real projects, with GitHub as version-controlled memory and Vercel as the deployment surface.
+Built and used in production by [Rose Laguana](https://roselaguana.vercel.app) to coordinate Perplexity Computer, Claude Code, and a Codex verification lane across real projects, with GitHub as the shared memory and checkpoint layer throughout and Vercel as the deployment surface.
 
 ## The problem
 
@@ -26,14 +26,18 @@ Agents read these before touching anything. The loop:
 
 ```mermaid
 flowchart TD
-    A[Strategy agent<br/>research · specs · task briefs] --> B[GitHub<br/>version-controlled memory]
-    B --> C[Implementation agent<br/>reconcile · edit · commit]
-    C --> D[Review lane<br/>one scoped task per pass]
-    D --> B
-    B --> E[Deployment surface]
-    E --> F[Live verification<br/>nothing is shipped until the URL proves it]
-    F --> B
+    A[Perplexity Computer<br/>research · strategy · approved brief] --> B[GitHub feature branch<br/>brief and handoff saved]
+    B --> C[Claude Code<br/>reconcile · implement · test · commit]
+    C --> D[GitHub feature branch<br/>exact commit pushed for review]
+    D --> E[Codex<br/>source verification gate]
+    E -->|findings| C
+    E -->|pass + owner approval| F[GitHub main<br/>verified merges only]
+    F --> G[Vercel<br/>auto-deploys main]
+    G --> H[Codex<br/>live verification gate]
+    H -->|live failure| C
 ```
+
+Codex has two gates: source verification of the exact feature-branch commit before merge to main, and live verification of the deployed URL after. Codex is a verification lane, not a co-implementation lane: it reports findings and identifies the verified commit SHA, while the implementation agent owns remediation. Any implementation change after a pass invalidates the pass.
 
 ## The rules that make it work
 

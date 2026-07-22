@@ -31,6 +31,17 @@ What is true right now. Keep this section honest and current; delete anything st
 
 - One bullet per change: what shipped, the commit hash, what was verified, and any deliberate deviations from the original plan with the reason.
 
+## Verification state
+
+If the project uses a verification agent, every handoff records:
+
+- **Branch name:** {{feature branch}}
+- **Implementation commit SHA:** {{sha}}
+- **Verification status:** {{pending / PASS / FAILED}}
+- **Findings:** {{list, or PASS}}
+- **Post-verification changes:** {{none, or what changed and that the pass is invalidated}}
+- **Deployed commit SHA and live-verification result:** {{sha + result, or not yet deployed}}
+
 ## Unfinished / known gaps
 
 - Open items, each with enough context that a fresh agent could pick it up cold.
