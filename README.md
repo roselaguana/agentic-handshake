@@ -32,12 +32,30 @@ flowchart TD
     D --> E[Codex<br/>source verification gate]
     E -->|findings| C
     E -->|pass + owner approval| F[GitHub main<br/>verified merges only]
-    F --> G[Vercel<br/>auto-deploys main]
+    F --> G[Vercel<br/>deploys main to production]
     G --> H[Codex<br/>live verification gate]
     H -->|live failure| C
 ```
 
 Codex has two gates: source verification of the exact feature-branch commit before merge to main, and live verification of the deployed URL after. Codex is a verification lane, not a co-implementation lane: it reports findings and identifies the verified commit SHA, while the implementation agent owns remediation. Any implementation change after a pass invalidates the pass.
+
+## The lanes
+
+This is a gated workflow with selectable lanes, not a rigid sequence that requires every tool for every task:
+
+- **GitHub** is the persistent coordination layer throughout, not a late step: branches, pull requests, checkpoints, and the audit trail.
+- **Perplexity Computer** is the optional discovery and strategy lane: research, exploration, and the approved brief.
+- **Claude Code** is the current primary implementation agent.
+- **Cursor** is an optional implementation environment when it adds value.
+- **Codex** is the independent verification lane.
+- **Vercel** deploys production from approved main. It may also auto-create nonproduction previews from feature branches and PRs; a preview is neither approval nor shipment.
+- **The owner** retains final approval.
+
+The full lane is appropriate for public, high-risk, or substantive changes; tool participation can vary by task. What never varies: changes destined for main require a feature branch, an exact-SHA verification gate, and owner approval.
+
+## The verification record lives on the pull request
+
+A candidate commit cannot truthfully contain its own SHA or its own later verification result. So the handoff file is a candidate-state snapshot, captured before verification and always pending inside the candidate commit; the draft pull request identifies the exact candidate SHA externally; and the verifier's PASS or FAIL report lives in the PR review or a PR comment. Any new commit after verification invalidates the prior result and produces a new candidate for the verifier.
 
 ## The rules that make it work
 
@@ -45,6 +63,7 @@ Codex has two gates: source verification of the exact feature-branch commit befo
 2. **Documentation is part of the change, not an afterthought.** A task is not done until `HANDOFF.md` reflects the new state. The next agent starts from the file, not from a memory of the conversation.
 3. **Private by default.** Repos start private. Anything public passes a truth-and-privacy review first: claims must be accurate, and operating docs must never reach a public surface. If the host serves raw repo files, exclude the operating docs from deployment explicitly.
 4. **Verify on the surface people actually visit.** A deploy tool reporting success is a claim, not a verification. Check the live URL for what must be there, and for what must not.
+5. **Nobody grades their own homework.** An implementation agent cannot self-issue verification approval; a PASS only exists as a distinct verifier result naming the exact commit SHA it reviewed, and without one the status is pending. Sequence matters as much as substance: merging before verification converts the check into a post-merge audit, which is a protocol failure even when the source later passes technically. This protocol learned that rule the honest way, by failing its own audit on sequencing and recording the failure.
 
 ## Does it work?
 

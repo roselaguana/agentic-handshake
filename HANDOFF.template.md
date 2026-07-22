@@ -31,16 +31,32 @@ What is true right now. Keep this section honest and current; delete anything st
 
 - One bullet per change: what shipped, the commit hash, what was verified, and any deliberate deviations from the original plan with the reason.
 
-## Verification state
+## Current candidate (pre-verification snapshot)
 
-If the project uses a verification agent, every handoff records:
+This section describes the candidate this file ships inside. It is always pre-verification: a candidate commit cannot truthfully contain its own SHA or its own later verification result, so this section never names a SHA and never carries PASS or FAILED. The draft pull request owns the exact candidate SHA (its head) and the external verification result.
 
-- **Branch name:** {{feature branch}}
-- **Implementation commit SHA:** {{sha}}
-- **Verification status:** {{pending / PASS / FAILED}}
-- **Findings:** {{list, or PASS}}
-- **Post-verification changes:** {{none, or what changed and that the pass is invalidated}}
-- **Deployed commit SHA and live-verification result:** {{sha + result, or not yet deployed}}
+- **Feature branch:** {{branch name}}
+- **Draft PR:** {{URL or reference}}
+- **Candidate SHA:** identified externally by the PR head
+- **Verifier:** pending
+- **Verification status:** pending
+- **Owner approval:** not given
+- **Preview deployment:** {{none, or nonproduction preview auto-created by the host; a preview is neither approval nor shipment}}
+- **Production deployment:** not deployed
+
+## Historical release record (completed releases only)
+
+Completed results live here, added by a later, separately verified documentation change, never by amending the original candidate. Each record may reference:
+
+- **Verified candidate SHA:** {{sha}}
+- **PR URL:** {{url}}
+- **Verifier report URL:** {{PR review or comment link}}
+- **Owner approval:** {{where recorded}}
+- **Merge commit:** {{sha}}
+- **Production commit:** {{sha}}
+- **Live-verification result:** {{result and reference}}
+
+A historical record documents what a past PR already proved externally. It is not the original candidate's self-contained verification, and the implementing agent still cannot write PASS anywhere without the verifier's report for the exact SHA.
 
 ## Unfinished / known gaps
 
