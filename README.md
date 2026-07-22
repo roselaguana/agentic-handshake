@@ -32,7 +32,7 @@ flowchart TD
     D --> E[Codex<br/>source verification gate]
     E -->|findings| C
     E -->|pass + owner approval| F[GitHub main<br/>verified merges only]
-    F --> G[Vercel<br/>auto-deploys main]
+    F --> G[Vercel<br/>deploys main to production]
     G --> H[Codex<br/>live verification gate]
     H -->|live failure| C
 ```
@@ -48,7 +48,7 @@ This is a gated workflow with selectable lanes, not a rigid sequence that requir
 - **Claude Code** is the current primary implementation agent.
 - **Cursor** is an optional implementation environment when it adds value.
 - **Codex** is the independent verification lane.
-- **Vercel** deploys the approved GitHub state.
+- **Vercel** deploys production from approved main. It may also auto-create nonproduction previews from feature branches and PRs; a preview is neither approval nor shipment.
 - **The owner** retains final approval.
 
 The full lane is appropriate for public, high-risk, or substantive changes; tool participation can vary by task. What never varies: changes destined for main require a feature branch, an exact-SHA verification gate, and owner approval.

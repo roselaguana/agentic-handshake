@@ -80,9 +80,10 @@ The pull request is the authoritative external verification record:
 
 ## Deployment rules
 
-- Deployment method: {{e.g. push to main auto-deploys via host X}}
-- If the host serves raw repo files, keep `HANDOFF.md` and `AGENTS.md` excluded from deployment (e.g. via the host's ignore file).
-- After any deploy, verify the live URL: confirm what must be there, and grep for what must not.
+- Deployment method: {{e.g. merge to main auto-deploys to production via host X}}
+- Distinguish preview from production: hosts may auto-create nonproduction preview deployments from feature branches or PRs. A preview is neither protocol approval nor production shipment; record preview and production states separately.
+- If the host serves raw repo files, keep `HANDOFF.md` and `AGENTS.md` excluded from deployment (previews included, e.g. via the host's ignore file).
+- After any production deploy, verify the live URL: confirm what must be there, and grep for what must not.
 
 ## Handoff protocol
 

@@ -31,26 +31,32 @@ What is true right now. Keep this section honest and current; delete anything st
 
 - One bullet per change: what shipped, the commit hash, what was verified, and any deliberate deviations from the original plan with the reason.
 
-## Verification state
+## Current candidate (pre-verification snapshot)
 
-This file is a candidate-state snapshot captured before verification. It cannot truthfully contain its own commit SHA or its own later verification result: the draft pull request owns the exact candidate SHA and the external verification result, and the state recorded here stays pending inside every candidate commit.
-
-If the project uses a verification agent, every handoff records:
+This section describes the candidate this file ships inside. It is always pre-verification: a candidate commit cannot truthfully contain its own SHA or its own later verification result, so this section never names a SHA and never carries PASS or FAILED. The draft pull request owns the exact candidate SHA (its head) and the external verification result.
 
 - **Feature branch:** {{branch name}}
-- **Implementation commit SHA:** {{sha}}
-- **Verifier identity:** {{who or what verified, or pending}}
-- **Verification date:** {{date, or pending}}
-- **Verification type:** {{pre-merge gate / post-merge audit}}
-- **Verification status:** {{pending / PASS / FAILED}}
-- **Findings:** {{list, or PASS}}
-- **Verification report or evidence reference:** {{where the verifier's result lives}}
-- **Post-verification changes:** {{none, or what changed and that the pass is invalidated}}
-- **Owner approval:** {{given / not yet}}
-- **Merged SHA:** {{sha, or not merged}}
-- **Deployed SHA and live-verification result:** {{sha + result, or not yet deployed}}
+- **Draft PR:** {{URL or reference}}
+- **Candidate SHA:** identified externally by the PR head
+- **Verifier:** pending
+- **Verification status:** pending
+- **Owner approval:** not given
+- **Preview deployment:** {{none, or nonproduction preview auto-created by the host; a preview is neither approval nor shipment}}
+- **Production deployment:** not deployed
 
-The implementing agent cannot populate PASS without receiving the verifier's result for the exact SHA. Until that result exists, status stays pending.
+## Historical release record (completed releases only)
+
+Completed results live here, added by a later, separately verified documentation change, never by amending the original candidate. Each record may reference:
+
+- **Verified candidate SHA:** {{sha}}
+- **PR URL:** {{url}}
+- **Verifier report URL:** {{PR review or comment link}}
+- **Owner approval:** {{where recorded}}
+- **Merge commit:** {{sha}}
+- **Production commit:** {{sha}}
+- **Live-verification result:** {{result and reference}}
+
+A historical record documents what a past PR already proved externally. It is not the original candidate's self-contained verification, and the implementing agent still cannot write PASS anywhere without the verifier's report for the exact SHA.
 
 ## Unfinished / known gaps
 
