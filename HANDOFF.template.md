@@ -35,12 +35,20 @@ What is true right now. Keep this section honest and current; delete anything st
 
 If the project uses a verification agent, every handoff records:
 
-- **Branch name:** {{feature branch}}
+- **Feature branch:** {{branch name}}
 - **Implementation commit SHA:** {{sha}}
+- **Verifier identity:** {{who or what verified, or pending}}
+- **Verification date:** {{date, or pending}}
+- **Verification type:** {{pre-merge gate / post-merge audit}}
 - **Verification status:** {{pending / PASS / FAILED}}
 - **Findings:** {{list, or PASS}}
+- **Verification report or evidence reference:** {{where the verifier's result lives}}
 - **Post-verification changes:** {{none, or what changed and that the pass is invalidated}}
-- **Deployed commit SHA and live-verification result:** {{sha + result, or not yet deployed}}
+- **Owner approval:** {{given / not yet}}
+- **Merged SHA:** {{sha, or not merged}}
+- **Deployed SHA and live-verification result:** {{sha + result, or not yet deployed}}
+
+The implementing agent cannot populate PASS without receiving the verifier's result for the exact SHA. Until that result exists, status stays pending.
 
 ## Unfinished / known gaps
 

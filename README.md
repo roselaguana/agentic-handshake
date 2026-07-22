@@ -45,6 +45,7 @@ Codex has two gates: source verification of the exact feature-branch commit befo
 2. **Documentation is part of the change, not an afterthought.** A task is not done until `HANDOFF.md` reflects the new state. The next agent starts from the file, not from a memory of the conversation.
 3. **Private by default.** Repos start private. Anything public passes a truth-and-privacy review first: claims must be accurate, and operating docs must never reach a public surface. If the host serves raw repo files, exclude the operating docs from deployment explicitly.
 4. **Verify on the surface people actually visit.** A deploy tool reporting success is a claim, not a verification. Check the live URL for what must be there, and for what must not.
+5. **Nobody grades their own homework.** An implementation agent cannot self-issue verification approval; a PASS only exists as a distinct verifier result naming the exact commit SHA it reviewed, and without one the status is pending. Sequence matters as much as substance: merging before verification converts the check into a post-merge audit, which is a protocol failure even when the source later passes technically. This protocol learned that rule the honest way, by failing its own audit on sequencing and recording the failure.
 
 ## Does it work?
 

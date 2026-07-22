@@ -62,6 +62,13 @@ If the project uses a verification agent, the loop is:
 6. Only a verified commit may merge to main, and only after the owner approves.
 7. After deployment, the verifier checks the live URL. A live failure re-enters the loop.
 
+Verification-integrity rules:
+
+- An implementation agent cannot self-issue, infer, or record verifier approval. A PASS may only be recorded from a distinct verification result that names the exact commit SHA it reviewed.
+- When that result is absent, verification status remains pending, no matter how confident anyone is about the outcome.
+- A pre-merge verification gate and a post-merge audit are different things. A verification that runs after the commit has already reached main is a post-merge audit, and the record must say so.
+- A post-merge technical PASS does not prove the protocol sequence was followed. Sequence failures are protocol failures even when the content passes.
+
 ## Deployment rules
 
 - Deployment method: {{e.g. push to main auto-deploys via host X}}
