@@ -39,6 +39,24 @@ flowchart TD
 
 Codex has two gates: source verification of the exact feature-branch commit before merge to main, and live verification of the deployed URL after. Codex is a verification lane, not a co-implementation lane: it reports findings and identifies the verified commit SHA, while the implementation agent owns remediation. Any implementation change after a pass invalidates the pass.
 
+## The lanes
+
+This is a gated workflow with selectable lanes, not a rigid sequence that requires every tool for every task:
+
+- **GitHub** is the persistent coordination layer throughout, not a late step: branches, pull requests, checkpoints, and the audit trail.
+- **Perplexity Computer** is the optional discovery and strategy lane: research, exploration, and the approved brief.
+- **Claude Code** is the current primary implementation agent.
+- **Cursor** is an optional implementation environment when it adds value.
+- **Codex** is the independent verification lane.
+- **Vercel** deploys the approved GitHub state.
+- **The owner** retains final approval.
+
+The full lane is appropriate for public, high-risk, or substantive changes; tool participation can vary by task. What never varies: changes destined for main require a feature branch, an exact-SHA verification gate, and owner approval.
+
+## The verification record lives on the pull request
+
+A candidate commit cannot truthfully contain its own SHA or its own later verification result. So the handoff file is a candidate-state snapshot, captured before verification and always pending inside the candidate commit; the draft pull request identifies the exact candidate SHA externally; and the verifier's PASS or FAIL report lives in the PR review or a PR comment. Any new commit after verification invalidates the prior result and produces a new candidate for the verifier.
+
 ## The rules that make it work
 
 1. **No handoff runs verbatim.** The receiving agent reconciles the handoff against actual repo state before executing. Specs are written by one agent and checked by another; both can be wrong, and the diff between them is where errors hide.

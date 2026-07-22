@@ -48,7 +48,7 @@ After editing:
 2. Validate locally when possible.
 3. Update `HANDOFF.md` if project state, shipped surface, unfinished work, or future-agent instructions changed.
 4. Commit with a clear message.
-5. Push only when the owner has approved the change path or the task explicitly includes push.
+5. Push the feature branch to origin. A task instruction saying "push" authorizes pushing the feature branch; it never authorizes bypassing verification by pushing directly to main. There is no documentation, record-only, copy, or small-change exception.
 
 ## Verification workflow
 
@@ -68,6 +68,15 @@ Verification-integrity rules:
 - When that result is absent, verification status remains pending, no matter how confident anyone is about the outcome.
 - A pre-merge verification gate and a post-merge audit are different things. A verification that runs after the commit has already reached main is a post-merge audit, and the record must say so.
 - A post-merge technical PASS does not prove the protocol sequence was followed. Sequence failures are protocol failures even when the content passes.
+
+The pull request is the authoritative external verification record:
+
+- `HANDOFF.md` is a candidate-state snapshot captured before verification; its verification state stays pending inside every candidate commit, and a candidate commit is never amended merely to write PASS into its own handoff.
+- A draft pull request from the feature branch to main identifies the exact candidate SHA externally.
+- The verifier's PASS or FAIL report is tied to that exact SHA and lives in the PR review or a PR comment.
+- A result recorded by the owner on behalf of the verifier must be labeled as a relayed report, not presented as the verifier's authenticated identity.
+- Owner approval follows a PASS and is separately recorded on the pull request.
+- Squashing or rebasing after a PASS changes commit identity and requires verification of the resulting candidate. A merge commit is acceptable only if the verified candidate SHA is preserved as a parent and no unverified content is introduced.
 
 ## Deployment rules
 

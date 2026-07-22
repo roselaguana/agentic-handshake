@@ -33,6 +33,8 @@ What is true right now. Keep this section honest and current; delete anything st
 
 ## Verification state
 
+This file is a candidate-state snapshot captured before verification. It cannot truthfully contain its own commit SHA or its own later verification result: the draft pull request owns the exact candidate SHA and the external verification result, and the state recorded here stays pending inside every candidate commit.
+
 If the project uses a verification agent, every handoff records:
 
 - **Feature branch:** {{branch name}}
