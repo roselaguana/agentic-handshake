@@ -80,4 +80,7 @@ Copy them into your repo as `AGENTS.md` and `HANDOFF.md`, fill in the placeholde
 
 ## License
 
-MIT. Use it, adapt it, ship with it.
+[Apache License 2.0](LICENSE). Use it, adapt it, ship with it.
+
+Versions published before 2026-08-09 were released under the MIT License. That
+grant stands for those versions.
